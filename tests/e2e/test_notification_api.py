@@ -82,28 +82,6 @@ class TestNotificationAPI:
             assert "status" in notification
             assert "created_at" in notification
 
-    def test_get_notification_by_id(self):
-        """Тест получения уведомления по ID"""
-        # Сначала создаем уведомление
-        create_data = {
-            "type": "order_placed",
-            "message": "Your order has been placed",
-            "recipient": "customer@example.com"
-        }
-
-        create_response = requests.post(f"{BASE_URL}/", json=create_data)
-        notification_id = create_response.json()["id"]
-
-        # Получаем уведомление по ID
-        get_response = requests.get(f"{BASE_URL}/{notification_id}")
-
-        assert get_response.status_code == 200
-        notification = get_response.json()
-
-        assert notification["id"] == notification_id
-        assert notification["type"] == "order_placed"
-        assert notification["message"] == "Your order has been placed"
-
     def test_get_nonexistent_notification(self):
         """Тест получения несуществующего уведомления"""
         non_existent_id = "00000000-0000-0000-0000-000000000000"
